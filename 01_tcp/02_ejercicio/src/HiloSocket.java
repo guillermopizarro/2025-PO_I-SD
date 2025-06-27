@@ -4,6 +4,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Date;
 import java.util.Scanner;
 
 public class HiloSocket extends Thread {
@@ -27,12 +28,23 @@ public class HiloSocket extends Thread {
             Scanner teclado = new Scanner( System.in );
 
             String input = "";
+            String output = "";
             while ((input = in_socket.readLine()) != null) {
                 System.out.println(input);
 
-                if (input.equals("adios")){
+                if (input.equals("hola")) {
+                    output = teclado.nextLine();
+                } else if (input.equals("hora")){
+                    output = (new Date()).toString();
+                } else if (input.equals("adios")){
+                    output = "¡Que te vaya bien!";
+                    out_socket.println(output);
+                    out_socket.flush();
                     break;
                 }
+
+                out_socket.println(output);
+                out_socket.flush();
             }
 
             this.socket.close();

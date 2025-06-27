@@ -30,11 +30,21 @@ public class Cliente {
 
             Scanner teclado = new Scanner( System.in );
 
+            String input = "";
             while (true) {
-                String input = teclado.nextLine(); 
-                System.out.println("Cliente dice: ");
-                out_socket.println(input);
-                out_socket.flush();
+                // Envío de datos al servidor.
+                while ((input = teclado.nextLine()) != null) { 
+                    System.out.println("Cliente dice: " + input);
+                    out_socket.println(input);
+                    out_socket.flush();
+                    break;
+                }
+
+                // Recepción de mensajes del servidor.
+                while ((input = in_socket.readLine()) != null) { 
+                    System.out.println("Servidor dice: " + input);
+                    break;
+                }
 
                 if (input.equals("adios")) {
                     break;
